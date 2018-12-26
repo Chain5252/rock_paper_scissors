@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <script>
+    let playerScore = 0
+    let computerScore = 0
+
     function computerPlay() {
         const rockPaperScissors = ["rock", "paper", "scissors"]
         return rockPaperScissors[Math.floor(Math.random()*rockPaperScissors.length)]
@@ -13,41 +16,47 @@
             console.error("Input is " + err)
         }
         if (playerSelection == "rock" && computerSelection == "scissors") {
+            ++playerScore
             return "You Win! Rock beats Scissors" 
         } else if (playerSelection == "rock" && computerSelection == "paper") {
+            ++computerScore
             return "You Lose! Paper beats Rock!"
         } else if (playerSelection == "paper" && computerSelection == "rock") {
+            ++playerScore
             return "You Win! Paper beats Rock!"
         } else if (playerSelection == "paper" && computerSelection == "scissors") {
+            ++computerScore
             return "You Lose! Scissors beats Paper!"
         } else if (playerSelection == "scissors" && computerSelection == "paper") {
+            ++playerScore
             return "You Win! Scissors beats Paper!"
         } else if (playerSelection == "scissors" && computerSelection == "rock") {
+            ++computerScore
             return "You Lose! Rock beats Scissors"
         } else {
             return "You Tied!"
         }
     }
 
-    function evaluateRound(result, playerScore, computerScore) {
-        if (result.slice(4, 5) == "W") {
-            return ++playerScore
-        } else if (result.slice(4, 5) == "L") {
-            return ++computerScore
-        } else {
-            return result = playRound(computerPlay())
-        }
+    function resetScoreboard() {
+        playerScore = 0
+        computerScore = 0
     }
 
     function game() {
-        let playerScore = 0
-        let computerScore = 0
-        for (let i = 0; i < 5; i++) {
+        while (playerScore < 3) {
+            if (computerScore == 3) {
+                break
+            }
             let result = playRound(computerPlay())
             console.log(result)
-        } if (playerScore > computerScore) {
+            console.log(playerScore.toString() + " - " + computerScore.toString())
+        }
+        if (playerScore > computerScore) {
+            resetScoreboard()
             return "You Won!"
         } else {
+            resetScoreboard()
             return "You Lost!"
         }
     }
